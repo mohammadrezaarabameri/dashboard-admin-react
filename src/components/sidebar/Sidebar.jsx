@@ -7,6 +7,7 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import { NavLink } from 'react-router-dom';
 import './Sidebar.css'
 
 export default function Sidebar() {
@@ -16,10 +17,13 @@ export default function Sidebar() {
         <div className="sidebarMenu">
             <h3 className='sidebarTittle'>Dashboard</h3>
             <ul className='sidebarList'>
-                <li className="sidebarListItem active">
+                <NavLink to="/" className={(link) => link.isActive ? "sidebarListItem active" : "link"}>
+
+                <li className="sidebarListItem ">
 <LineStyleIcon className='sidebarIcon' />
 Home
                 </li>
+                </NavLink>
                 <li className="sidebarListItem">
 <TimelineIcon className='sidebarIcon' />
 Analytics
@@ -33,18 +37,24 @@ Sales
         <div className="sidebarMenu">
             <h3 className='sidebarTittle'>Quick Menu</h3>
             <ul className='sidebarList'>
-                <li className="sidebarListItem active">
+                <NavLink to= "/users" className= {(link) => link.isActive ? "sidebarListItem active" : "link"} >
+                <li className="sidebarListItem">
 <PermIdentityIcon className='sidebarIcon' />
 User
                 </li>
+                </NavLink>
+                <NavLink to= "/newUser" className= {(link) => link.isActive ? "sidebarListItem active" : "link"} >
                 <li className="sidebarListItem">
 <PersonAddAltIcon className='sidebarIcon' />
 New User
                 </li>
+                </NavLink>
+                <NavLink to= "/products" className= {(link) => link.isActive ? "sidebarListItem active" : "link"} >
                 <li className="sidebarListItem">
 <StorefrontIcon className='sidebarIcon' />
 Products
                 </li>
+                </NavLink>
                 <li className="sidebarListItem">
 <AttachMoneyIcon className='sidebarIcon' />
 Transaction                </li>
