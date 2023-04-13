@@ -17,7 +17,7 @@ export default function Sidebar() {
         <div className="sidebarMenu">
             <h3 className='sidebarTittle'>Dashboard</h3>
             <ul className='sidebarList'>
-                <NavLink to="/" className={(link) => link.isActive ? "sidebarListItem active" : "link"}>
+                <NavLink to="/Home" className={(link) => link.isActive ? "sidebarListItem active" : "link"}>
 
                 <li className="sidebarListItem ">
 <LineStyleIcon className='sidebarIcon' />
