@@ -6,7 +6,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 export default function Feature() {
   return (
     <div className="feature">
-        <div className="featureItem">
+        <div className="featureItemRevanue">
             <span className="featureTittle">Revanue</span>
         <div className="featureContainer">
             <span className="featureMoney">$2,123</span>
@@ -16,7 +16,7 @@ export default function Feature() {
         </div>
         <span className="featureSub">Compared to last month</span>
         </div>
-        <div className="featureItem">
+        <div className="featureItemSales">
             <span className="featureTittle">Sales</span>
         <div className="featureContainer">
             <span className="featureMoney">$4,415</span>
@@ -26,7 +26,7 @@ export default function Feature() {
         </div>
         <span className="featureSub">Compared to last month</span>
         </div>
-        <div className="featureItem">
+        <div className="featureItemCost">
             <span className="featureTittle">Cost</span>
         <div className="featureContainer">
             <span className="featureMoney">$2,225</span>

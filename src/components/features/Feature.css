@@ -3,13 +3,32 @@
     display: flex;
     justify-content: space-between;
 }
-.featureItem {
+.featureItemRevanue {
     flex: 1;
     margin: 0px 20px;
     padding: 30px;
     border-radius: 10px;
     cursor: pointer;
     box-shadow: 0 0 15px -10px rgba(0, 0, 0, 0.75);
+    background-color: rgb(32, 248, 248);
+}
+.featureItemSales{
+    flex: 1;
+    margin: 0px 20px;
+    padding: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 15px -10px rgba(0, 0, 0, 0.75);
+    background-color: rgb(217, 255, 0);
+}
+.featureItemCost{
+    flex: 1;
+    margin: 0px 20px;
+    padding: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 15px -10px rgba(0, 0, 0, 0.75);
+    background-color: rgb(252, 51, 151);
 }
 .featureTittle {
     font-size: 20px;
