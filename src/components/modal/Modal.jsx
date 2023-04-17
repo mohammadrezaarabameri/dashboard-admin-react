@@ -6,6 +6,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
+import { apiRoutes } from "../../api/api";
+import axios from "axios";
+import { useModal } from '../../context/ModalContext/ModalContext';
+
 
 function PaperComponent(props) {
   return (
@@ -20,9 +24,11 @@ function PaperComponent(props) {
 
 export default function Modal({children, ...otherProps}) {
 
-  const { icon, title, saveCallback } = otherProps;
+  const { icon, title, id } = otherProps;
 
   const [open, setOpen] = React.useState(false);
+
+  const { value, setValue } = useModal();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -30,6 +36,34 @@ export default function Modal({children, ...otherProps}) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const saveCallback = (e) => {
+    e.preventDefault();
+    
+    const data = {
+      id: id,
+      status: value,
+    };
+    sendChangeStatus(data);
+  };
+
+  const sendChangeStatus = (reqData) => {
+    const token = localStorage.getItem("token");
+
+    axios
+      .post(apiRoutes.status.changeStatus, {
+        ...reqData,
+      }, { headers: {
+        Authorization: `Bearer ${token}`,
+      }},)
+      .then((res) => {
+        console.log(res);
+        let { data } = res;
+        if (data.result.message && data.error == null) {
+          setOpen(false);
+        }
+      });
   };
 
   return (

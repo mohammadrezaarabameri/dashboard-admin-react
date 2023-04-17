@@ -50,6 +50,8 @@ export default function UserList() {
       field: "status",
       headerName: "Status",
       width: 160,
+      renderCell: (params) => {
+        return ( params.row.status ? params.row.status : "Produced" ) }
     },
     {
       field: "action",
@@ -60,7 +62,7 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <ModalProvider>
-            <Modal title={'Change Status'} icon={<EditIcon />}>
+            <Modal title={'Change Status'} icon={<EditIcon />} id={ params.row.id}>
               <SelectComponent values={values} />
             </Modal>
           </ModalProvider>
@@ -85,6 +87,20 @@ export default function UserList() {
         setRows(data.result);
       });
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    axios
+      .get(apiRoutes.asset.getAssetByOwner, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        let { data } = res;
+        setRows(data.result);
+      });
+  }, [rows]);
 
   return (
     <div>
