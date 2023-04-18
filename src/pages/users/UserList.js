@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { apiRoutes } from "../../api/api";
 import { jsx, css, Global, ClassNames } from "@emotion/react";
@@ -11,6 +11,10 @@ import { produced, wasted, warehouse } from "../../api/Status";
 import { ModalProvider } from "../../context/ModalContext/ModalContext";
 import Topbar from "../../components/topbar/topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
+import { useModal } from "../../context/ModalContext/ModalContext";
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+import './userList.css'
 
 const values = [
   {
@@ -62,7 +66,7 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <ModalProvider>
-            <Modal title={'Change Status'} icon={<EditIcon />} id={ params.row.id}>
+            <Modal title={'Change Status'} icon={<EditIcon />} iD={ params.row.id}>
               <SelectComponent values={values} />
             </Modal>
           </ModalProvider>
@@ -72,6 +76,10 @@ export default function UserList() {
   ]);
 
   const [rows, setRows] = useState([]);
+
+  const {value, setValue} = useModal();
+
+  const alertRef = useRef();
   
 
   useEffect(() => {
@@ -99,8 +107,16 @@ export default function UserList() {
       .then((res) => {
         let { data } = res;
         setRows(data.result);
+        setValue(true);
       });
   }, [rows]);
+
+  useEffect( ()=> {
+    if(value) {
+      
+      alertRef.current.classList.add('show')
+    }
+  },[value])
 
   return (
     <div>
@@ -108,6 +124,9 @@ export default function UserList() {
       <div className="row">
         <Sidebar />
         <div>
+        <Stack className="hiden" ref={alertRef} value={value} sx={{ width: '100%' }} spacing={2}>
+        <Alert severity="success"   > This is a success alert — check it out!</Alert>
+        </Stack>
         <Container sx={{ height: 400, width: "100%" }}>
       <DataGrid
         rows={rows}

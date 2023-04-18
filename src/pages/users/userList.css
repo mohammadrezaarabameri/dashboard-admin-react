@@ -1,0 +1,6 @@
+.hiden{
+    visibility: hidden;
+}
+.hiden.show{
+    visibility: unset;
+}

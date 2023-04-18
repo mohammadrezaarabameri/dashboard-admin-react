@@ -9,6 +9,7 @@ import Draggable from 'react-draggable';
 import { apiRoutes } from "../../api/api";
 import axios from "axios";
 import { useModal } from '../../context/ModalContext/ModalContext';
+import ButtonLaoding from '../button/Button';
 
 
 function PaperComponent(props) {
@@ -24,7 +25,7 @@ function PaperComponent(props) {
 
 export default function Modal({children, ...otherProps}) {
 
-  const { icon, title, id } = otherProps;
+  const { icon, title, iD } = otherProps;
 
   const [open, setOpen] = React.useState(false);
 
@@ -42,7 +43,7 @@ export default function Modal({children, ...otherProps}) {
     e.preventDefault();
     
     const data = {
-      id: id,
+      id: iD,
       status: value,
     };
     sendChangeStatus(data);
@@ -87,7 +88,9 @@ export default function Modal({children, ...otherProps}) {
           <Button autoFocus onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={saveCallback}>Save</Button>
+          <div onClick={saveCallback}>
+            <ButtonLaoding />
+            </div>
         </DialogActions>
       </Dialog>
     </div>
