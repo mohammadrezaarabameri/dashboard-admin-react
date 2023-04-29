@@ -10,6 +10,7 @@ import { apiRoutes } from "../../api/api";
 import axios from "axios";
 import { useModal } from '../../context/ModalContext/ModalContext';
 import ButtonLaoding from '../button/Button';
+import './Modal.css'
 
 
 function PaperComponent(props) {
@@ -69,7 +70,7 @@ export default function Modal({children, ...otherProps}) {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button style={{border:'none', color:'black'}} variant="outlined" onClick={handleClickOpen}>
         {icon}
       </Button>
       <Dialog
@@ -84,8 +85,8 @@ export default function Modal({children, ...otherProps}) {
         <DialogContent>
           {children}
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
+        <DialogActions className='buttonModal'>
+          <Button autoFocus onClick={handleClose} className='buttonCancel'>
             Cancel
           </Button>
           <div onClick={saveCallback}>

@@ -70,23 +70,21 @@ export default function Login() {
   return (
     <div className="html">
       <div className="body">
-        <div className="container">
-          <div className="tittle">Sig in</div>
+        <div className="containerLogin">
+          <div className="tittleLogin">Sig in</div>
           <form onSubmit={submitBtn}>
             <div className="login">
               <span class="fas fa-user"></span>
-              <input type="text" onChange={changeUser}></input>
-              <label>user name</label>
+              <input type="text" onChange={changeUser} placeholder="username"></input>
             </div>
             <div className="login">
               <span class="fas fa-user"></span>
-              <input type="number" onChange={changePassword}></input>
-              <label>password</label>
+              <input type="number" onChange={changePassword} placeholder="password"></input>
             </div>
             <div className="forget">
               <Link to="">forget password?</Link>
             </div>
-            <button type="submit">Sig in</button>
+            <button type="submit" className="submitLogin">Sig in</button>
           </form>
         </div>
       </div>

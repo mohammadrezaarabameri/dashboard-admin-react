@@ -6,7 +6,9 @@ import { Container } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Modal from "../../components/modal/Modal";
 import EditIcon from '@mui/icons-material/Edit';
+import HistoryIcon from '@mui/icons-material/History';
 import SelectComponent from "../../components/select/Select";
+import TimeLine from "../../components/timeline/TimeLine";
 import { produced, wasted, warehouse } from "../../api/Status";
 import { ModalProvider } from "../../context/ModalContext/ModalContext";
 import Topbar from "../../components/topbar/topbar";
@@ -65,11 +67,22 @@ export default function UserList() {
       width: 160,
       renderCell: (params) => {
         return (
+          <>
+          <div>
           <ModalProvider>
-            <Modal title={'Change Status'} icon={<EditIcon />} iD={ params.row.id}>
+            <Modal title={'Change Status'} icon={<EditIcon/>} iD={ params.row.id}>
               <SelectComponent values={values} />
             </Modal>
           </ModalProvider>
+            </div>
+        <div>
+          <ModalProvider>
+            <Modal title={'History'} icon={<HistoryIcon/>} >
+              <TimeLine iD={ params.row.id}/>
+             </Modal>
+          </ModalProvider>
+        </div>
+         </>
         )
       }
     },
@@ -80,21 +93,6 @@ export default function UserList() {
   const {value, setValue} = useModal();
 
   const alertRef = useRef();
-  
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    axios
-      .get(apiRoutes.asset.getAssetByOwner, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        let { data } = res;
-        setRows(data.result);
-      });
-  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -123,7 +121,7 @@ export default function UserList() {
       <Topbar />
       <div className="row">
         <Sidebar />
-        <div>
+        <div className='list'>
         <Stack className="hiden" ref={alertRef} value={value} sx={{ width: '100%' }} spacing={2}>
         <Alert severity="success"   > This is a success alert — check it out!</Alert>
         </Stack>

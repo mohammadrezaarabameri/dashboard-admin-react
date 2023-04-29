@@ -12,4 +12,7 @@ export const apiRoutes = {
   status: {
     changeStatus: `${HOST}/channels/mychannel/chaincodes/chaincode/asset/status/change`,
   },
+  history: {
+    getAssetHistory: `${HOST}/channels/mychannel/chaincodes/chaincode/asset/history`,
+  },
 };
