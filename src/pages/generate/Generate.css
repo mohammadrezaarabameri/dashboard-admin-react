@@ -1,0 +1,44 @@
+.generate {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.generateItem {
+    flex: 1;
+    margin: 0px 20px;
+    padding: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 15px -10px rgba(0, 0, 0, 0.75);
+    background-color: #613fe5;
+}
+.generateTittle {
+    font-size: 20px;
+    color: #ffffff
+}
+.generateContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0px;
+}
+.generateInput{
+    border-radius: 10px;
+    margin-top: 10px;
+
+}
+.generateSubmit{
+    flex: 1;
+    margin-top: 10px;
+    justify-content: center;
+    align-items: center;
+}
+.submit{
+    padding: 0px 10px;
+}
+.inputSelect{
+    color: #ffffff!important;
+}
+.select{
+    color: #ffffff!important;
+}

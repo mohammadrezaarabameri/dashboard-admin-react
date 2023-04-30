@@ -17,6 +17,48 @@ import { useModal } from "../../context/ModalContext/ModalContext";
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import './userList.css'
+//import tab
+import PropTypes from 'prop-types';
+import SwipeableViews from 'react-swipeable-views';
+import { useTheme } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `full-width-tab-${index}`,
+    'aria-controls': `full-width-tabpanel-${index}`,
+  };
+}
 
 const values = [
   {
@@ -34,6 +76,17 @@ const values = [
 ]
 
 export default function UserList() {
+
+  const theme = useTheme();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleChangeIndex = (index) => {
+    setValue(index);
+  };
 
   const [columns, setColumns] = useState([
     {
@@ -70,14 +123,14 @@ export default function UserList() {
           <>
           <div>
           <ModalProvider>
-            <Modal title={'Change Status'} icon={<EditIcon/>} iD={ params.row.id}>
+            <Modal title={'Change Status'} icon={<EditIcon  />} iD={ params.row.id}>
               <SelectComponent values={values} />
             </Modal>
           </ModalProvider>
             </div>
         <div>
           <ModalProvider>
-            <Modal title={'History'} icon={<HistoryIcon/>} >
+            <Modal title={'History'} icon={<HistoryIcon  />} >
               <TimeLine iD={ params.row.id}/>
              </Modal>
           </ModalProvider>
@@ -90,7 +143,7 @@ export default function UserList() {
 
   const [rows, setRows] = useState([]);
 
-  const {value, setValue} = useModal();
+  const {valuee, setValuee} = useModal();
 
   const alertRef = useRef();
 
@@ -105,16 +158,16 @@ export default function UserList() {
       .then((res) => {
         let { data } = res;
         setRows(data.result);
-        setValue(true);
+        setValuee(true);
       });
   }, [rows]);
 
   useEffect( ()=> {
-    if(value) {
+    if(valuee) {
       
       alertRef.current.classList.add('show')
     }
-  },[value])
+  },[valuee])
 
   return (
     <div>
@@ -122,11 +175,31 @@ export default function UserList() {
       <div className="row">
         <Sidebar />
         <div className='list'>
-        <Stack className="hiden" ref={alertRef} value={value} sx={{ width: '100%' }} spacing={2}>
+        <Stack className="hiden" ref={alertRef} value={valuee} sx={{ width: '100%' }} spacing={2}>
         <Alert severity="success"   > This is a success alert — check it out!</Alert>
         </Stack>
+        <Box sx={{ bgcolor: 'background.paper', width: '98%' }}>
+      <AppBar position="static">
+        <Tabs style={{backgroundColor: "#613fe5"}}
+          value={value}
+          onChange={handleChange}
+          indicatorColor="secondary"
+          textColor="inherit"
+          variant="fullWidth"
+          aria-label="full width tabs example"
+        >
+          <Tab label="Item One" {...a11yProps(0)} />
+          <Tab label="Item Two" {...a11yProps(1)} />
+        </Tabs>
+      </AppBar>
+      <SwipeableViews
+        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        index={value}
+        onChangeIndex={handleChangeIndex}
+      >
+        <TabPanel value={value} index={0} dir={theme.direction}>
         <Container sx={{ height: 400, width: "100%" }}>
-      <DataGrid
+      <DataGrid 
         rows={rows}
         columns={columns}
         initialState={{
@@ -141,6 +214,28 @@ export default function UserList() {
         disableRowSelectionOnClick
       />
     </Container>
+        </TabPanel>
+        <TabPanel value={value} index={1} dir={theme.direction}>
+        <Container sx={{ height: 400, width: "100%" }}>
+      <DataGrid 
+        rows={rows}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
+        checkboxSelection
+        disableRowSelectionOnClick
+      />
+    </Container>
+        </TabPanel>
+      </SwipeableViews>
+    </Box>
+
         </div>
       </div>
     </div>

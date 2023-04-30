@@ -12,8 +12,8 @@ export default function Home() {
       <Topbar />
       <div className="row">
         <Sidebar />
-      <div className="home">
-        <Feature />
+      <div className="home" style={{ backgroundColor: "#120e16"}}>
+        <Feature  />
         <Chart grid tittle="year sale" data={xAxisData} datakey="sale" />
       </div>
       </div>

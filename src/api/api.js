@@ -15,4 +15,9 @@ export const apiRoutes = {
   history: {
     getAssetHistory: `${HOST}/channels/mychannel/chaincodes/chaincode/asset/history`,
   },
+  generate: {
+    addBatchFull: `${HOST}/channels/mychannel/chaincodes/chaincode/batch/create/asset/bulk`,
+    addBulk: `${HOST}/channels/mychannel/chaincodes/chaincode/asset/create/bulk`,
+    addBatchEmpty: `${HOST}/channels/mychannel/chaincodes/chaincode/batch/create`
+  }
 };

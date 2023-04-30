@@ -12,7 +12,7 @@ import './Sidebar.css'
 
 export default function Sidebar() {
   return (
-<div className="sidebar">
+<div className="sidebar" style={{ backgroundColor: "#120e16"}}>
     <div className="sidebarWrapper">
         <div className="sidebarMenu">
             <h3 className='sidebarTittle'>Dashboard</h3>
@@ -37,23 +37,24 @@ Sales
         <div className="sidebarMenu">
             <h3 className='sidebarTittle'>Quick Menu</h3>
             <ul className='sidebarList'>
-                <NavLink to= "/users" className= {(link) => link.isActive ? "sidebarListItem active" : "link"} >
-                <li className="sidebarListItem">
-<PermIdentityIcon className='sidebarIcon' />
-User
-                </li>
-                </NavLink>
-                <NavLink to= "/newUser" className= {(link) => link.isActive ? "sidebarListItem active" : "link"} >
-                <li className="sidebarListItem">
-<PersonAddAltIcon className='sidebarIcon' />
-New User
-                </li>
-                </NavLink>
+
                 <NavLink to= "/products" className= {(link) => link.isActive ? "sidebarListItem active" : "link"} >
                 <li className="sidebarListItem">
 <StorefrontIcon className='sidebarIcon' />
 Products
                 </li>
+                </NavLink>
+                <NavLink to= "/generate" className= {(link) => link.isActive ? "sidebarListItem active" : "link"} >
+                <li className="sidebarListItem">
+<PersonAddAltIcon className='sidebarIcon' />
+Generate
+                </li>
+                </NavLink>
+                <NavLink to= "/user" className= {(link) => link.isActive ? "sidebarListItem active" : "link"} >
+                <li className="sidebarListItem">
+<PermIdentityIcon className='sidebarIcon' />
+User
+</li>
                 </NavLink>
                 <li className="sidebarListItem">
 <AttachMoneyIcon className='sidebarIcon' />

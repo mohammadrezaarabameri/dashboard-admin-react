@@ -68,7 +68,7 @@ export default function Login() {
       });
   };
   return (
-    <div className="html">
+    <div className="html" style={{backgroundColor: "#120e16"}}>
       <div className="body">
         <div className="containerLogin">
           <div className="tittleLogin">Sig in</div>

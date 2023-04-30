@@ -17,7 +17,7 @@
     font-weight: bold;
     font-size: 30px;
     cursor: pointer;
-    color: darkblue;
+    color: #613fe5;
 }
 .topRight {
     display: flex;
@@ -26,7 +26,7 @@
 .topIconCountainer {
     position: relative;
     cursor: pointer;
-    color: #555;
+    color: #f6f6f7;
     margin-right: 10px;
 }
 .topIconBadge {

@@ -6,7 +6,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 export default function Topbar() {
   return (
-    <div className="topbar">
+    <div className="topbar" style={{ backgroundColor: "#120e16"}}>
       <div className="topbarWrapper">
         <div className="topLeft">
           <span className="logo">MetaDeSC</span>
