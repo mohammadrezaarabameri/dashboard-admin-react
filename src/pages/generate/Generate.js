@@ -13,6 +13,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import './Generate.css'
 import { margin } from '@mui/system';
 import { useRef } from 'react';
+import ButtonLaoding from '../../components/button/Button';
 
 export default function Generate () {
     const [generate, setGenerate] = useState('');
@@ -161,7 +162,7 @@ console.log(rows)
         <div className='list'>
         <div className="generate">
         <div className="generateItem">
-            <span className="generateTittle">Generate Producte</span>
+            <span className="generateTittle">Generate Product</span>
         <div className="generateContainer">
         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
       <InputLabel id="demo-select-small-label" className='inputSelect'>Select</InputLabel>
@@ -182,8 +183,8 @@ console.log(rows)
       <div className='generateInput'>
       <input type='number' value={count} ref={inputRef}/>
       </div>
-      <div className='generateSubmit'>
-      <button type='submit' className='submit' onClick={saveCallback}>create</button>
+      <div className='generateSubmit' onClick={saveCallback}>
+      <ButtonLaoding nameButton={'creat'} />
       </div>
     </FormControl>
         </div>

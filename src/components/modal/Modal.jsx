@@ -90,7 +90,7 @@ export default function Modal({children, ...otherProps}) {
             Cancel
           </Button>
           <div onClick={saveCallback}>
-            <ButtonLaoding />
+            <ButtonLaoding nameButton={'save'}/>
             </div>
         </DialogActions>
       </Dialog>

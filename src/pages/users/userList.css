@@ -8,3 +8,41 @@
 .hiden.show{
     visibility: unset;
 }
+.editIcon{
+    background-color: #E91E63;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+}
+.lablEdit{
+    padding: 2px 5px;
+    color: #ffffff;
+}
+.historyIcon{
+    background-color: #009688;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+}
+.lablHistory{
+    padding: 2px 5px;
+    color: #ffffff;
+
+}
+.css-1usso8h-MuiDataGrid-root .MuiDataGrid-withBorderColor{
+    border-color: black!important;
+}
+.css-rtrcn9-MuiTablePagination-root{
+    color: #ffffff!important;
+}
+.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root{
+    color: #ffffff!important;
+}
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root{
+    color:#ffffff!important;
+}
+.css-1usso8h-MuiDataGrid-root .MuiDataGrid-row:nth-child(odd){
+    background-color: #181818;
+}

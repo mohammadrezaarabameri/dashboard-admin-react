@@ -63,15 +63,18 @@ function a11yProps(index) {
 const values = [
   {
     name: produced.name,
-    value: produced.value
+    value: produced.value,
+    color: produced.color
   },
   {
     name: wasted.name,
-    value: wasted.value
+    value: wasted.value,
+    color: wasted.color
   },
   {
     name: warehouse.name,
-    value: warehouse.value
+    value: warehouse.value,
+    color: warehouse.color
   }
 ]
 
@@ -117,20 +120,20 @@ export default function UserList() {
       headerName: "Action",
       description: "This column has a value getter and is not sortable.",
       sortable: false,
-      width: 160,
+      width: 220,
       renderCell: (params) => {
         return (
           <>
           <div>
           <ModalProvider>
-            <Modal title={'Change Status'} icon={<EditIcon  />} iD={ params.row.id}>
-              <SelectComponent values={values} />
+            <Modal title={'Change Status'} icon={<div className="editIcon"> <label className="lablEdit">Edit</label><EditIcon  /></div>} iD={ params.row.id}>
+              <SelectComponent values={values} style={{backgroundColor: "values.color"}} />
             </Modal>
           </ModalProvider>
             </div>
         <div>
           <ModalProvider>
-            <Modal title={'History'} icon={<HistoryIcon  />} >
+            <Modal title={'History'} icon={<div className="historyIcon"> <label className="lablHistory">History</label><HistoryIcon  /></div>} >
               <TimeLine iD={ params.row.id}/>
              </Modal>
           </ModalProvider>
@@ -158,6 +161,7 @@ export default function UserList() {
       .then((res) => {
         let { data } = res;
         setRows(data.result);
+        console.log(data.result);
         setValuee(true);
       });
   }, [rows]);
@@ -178,7 +182,7 @@ export default function UserList() {
         <Stack className="hiden" ref={alertRef} value={valuee} sx={{ width: '100%' }} spacing={2}>
         <Alert severity="success"   > This is a success alert — check it out!</Alert>
         </Stack>
-        <Box sx={{ bgcolor: 'background.paper', width: '98%' }}>
+        <Box sx={{ bgcolor: 'background.paper', width: '98%' }} style={{borderRadius: "10px"}}>
       <AppBar position="static">
         <Tabs style={{backgroundColor: "#613fe5"}}
           value={value}
@@ -197,9 +201,9 @@ export default function UserList() {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-        <Container sx={{ height: 400, width: "100%" }}>
-      <DataGrid 
+        <TabPanel value={value} index={0} dir={theme.direction} style={{backgroundColor: "#000000"}}>
+        <Container sx={{ height: 400, width: "100%" }} >
+      <DataGrid style={{color: "#ffffff"}}
         rows={rows}
         columns={columns}
         initialState={{

@@ -5,9 +5,10 @@ import './Button.css'
 //     return new Promise((resolve) => setTimeout(resolve, 2000));
 //   }
 
-export default function ButtonLaoding() {
+export default function ButtonLaoding(props) {
         const [isLoading, setLoading] = useState(false);
         const buttonRef = useRef();
+        const {nameButton} = props;
 
         useEffect(() => {
           if (isLoading) {
@@ -26,7 +27,7 @@ export default function ButtonLaoding() {
             disabled={isLoading}
             onClick={!isLoading ? handleClick : null}
           >
-            save
+            {nameButton}
           </button>
         );
       }    
