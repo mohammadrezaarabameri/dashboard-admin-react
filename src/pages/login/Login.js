@@ -3,11 +3,15 @@ import "./Login.css";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { apiRoutes } from "../../api/api";
+import LoginProvider, {
+  useLogin,
+} from "../../context/LoginContext/LoginContext";
 
 export default function Login() {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const { login, setLogin } = useLogin();
 
   const changeUser = (e) => {
     setUserName(e.target.value);
@@ -37,7 +41,9 @@ export default function Login() {
         let { data } = res;
         if (data.token && data.token !== undefined && data.token !== null) {
           localStorage.setItem("token", data.token);
+          localStorage.setItem("username", reqData.username)
           setRoleAccess(reqData.username);
+          setLogin(reqData.username);
         }
       });
   };
@@ -58,9 +64,6 @@ export default function Login() {
         )[0];
 
         switch (userRole.role) {
-          case "Warehouse":
-            window.location.replace("Warehouse.js");
-            return;
           default:
             navigate("/Home");
             return;
@@ -68,26 +71,36 @@ export default function Login() {
       });
   };
   return (
-    <div className="html" style={{backgroundColor: "#120e16"}}>
-      <div className="body">
-        <div className="containerLogin">
-          <div className="tittleLogin">Sig in</div>
-          <form onSubmit={submitBtn}>
-            <div className="login">
-              <span class="fas fa-user"></span>
-              <input type="text" onChange={changeUser} placeholder="username"></input>
-            </div>
-            <div className="login">
-              <span class="fas fa-user"></span>
-              <input type="number" onChange={changePassword} placeholder="password"></input>
-            </div>
-            <div className="forget">
-              <Link to="">forget password?</Link>
-            </div>
-            <button type="submit" className="submitLogin">Sig in</button>
-          </form>
+      <div style={{    background: "#fff"}} className="html">
+        <div className="body">
+          <div className="containerLogin">
+            <div className="tittleLogin">Supply Chain</div>
+            <form onSubmit={submitBtn}>
+              <div className="login">
+                <span class="fas fa-user"></span>
+                <input
+                  type="text"
+                  onChange={changeUser}
+                  placeholder="username"
+                ></input>
+              </div>
+              <div className="login">
+                <span class="fas fa-user"></span>
+                <input
+                  type="password"
+                  onChange={changePassword}
+                  placeholder="password"
+                ></input>
+              </div>
+              <div className="forget">
+                <Link to="">forget password?</Link>
+              </div>
+              <button type="submit" className="submitLogin">
+                Sign in
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
   );
 }

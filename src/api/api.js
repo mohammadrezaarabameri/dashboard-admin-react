@@ -19,5 +19,11 @@ export const apiRoutes = {
     addBatchFull: `${HOST}/channels/mychannel/chaincodes/chaincode/batch/create/asset/bulk`,
     addBulk: `${HOST}/channels/mychannel/chaincodes/chaincode/asset/create/bulk`,
     addBatchEmpty: `${HOST}/channels/mychannel/chaincodes/chaincode/batch/create`
-  }
+  },
+  shop:{
+    getAssetsInMarket: `${HOST}/collection/Market/objects`
+  },
+  changeOwner: {
+    ownerShip: `${HOST}/channels/mychannel/chaincodes/chaincode/asset/owner/change`
+  },
 };

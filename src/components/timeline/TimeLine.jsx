@@ -1,121 +1,199 @@
-import * as React from 'react';
-import Timeline from '@mui/lab/Timeline';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineContent from '@mui/lab/TimelineContent';
-import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
-import TimelineDot from '@mui/lab/TimelineDot';
-import FastfoodIcon from '@mui/icons-material/Fastfood';
-import LaptopMacIcon from '@mui/icons-material/LaptopMac';
-import HotelIcon from '@mui/icons-material/Hotel';
-import RepeatIcon from '@mui/icons-material/Repeat';
-import Typography from '@mui/material/Typography';
-import { useEffect } from 'react';
-import axios from 'axios';
-import { apiRoutes } from '../../api/api';
-import { useState } from 'react';
+import * as React from "react";
+import Timeline from "@mui/lab/Timeline";
+import TimelineItem from "@mui/lab/TimelineItem";
+import TimelineSeparator from "@mui/lab/TimelineSeparator";
+import TimelineConnector from "@mui/lab/TimelineConnector";
+import TimelineContent from "@mui/lab/TimelineContent";
+import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
+import TimelineDot from "@mui/lab/TimelineDot";
+import FastfoodIcon from "@mui/icons-material/Fastfood";
+import LaptopMacIcon from "@mui/icons-material/LaptopMac";
+import HotelIcon from "@mui/icons-material/Hotel";
+import RepeatIcon from "@mui/icons-material/Repeat";
+import Typography from "@mui/material/Typography";
+import { useEffect } from "react";
+import axios from "axios";
+import { apiRoutes } from "../../api/api";
+import { useState } from "react";
 
 export default function TimeLine(props) {
-    const {iD} = props;
-    const [resData, setData] = useState([])
+  const { id } = props;
+  const [data, setData] = useState([]);
 
-    useEffect( ()=>{
-        const token = localStorage.getItem("token");
-        console.log(token);
-        axios
-        .get(apiRoutes.history.getAssetHistory +`?id=${iD}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        .then((res)=>{
-            let {data} = res;
-            console.log(data);
-            let assets = data.result.filter((ass)=>ass.asset.id === iD)[0];
-            console.log(assets);
-            console.log(assets.asset.SerialNumber);
-            setData(assets);
-        })
-    },[]);
-    console.log(resData);
-    return (
-        <Timeline position="alternate">
-          <TimelineItem>
-            <TimelineOppositeContent
-              sx={{ m: 'auto 0' }}
-              align="right"
-              variant="body2"
-              color="text.secondary"
-            >
-              {resData.timestamp}
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineConnector />
-              <TimelineDot>
-                <FastfoodIcon />
-              </TimelineDot>
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent sx={{ py: '12px', px: 2 }}>
-              <Typography variant="h6" component="span">
-              Asset-ID
-              </Typography>
-              <Typography>{resData.timestamp}</Typography>
-            </TimelineContent>
-          </TimelineItem>
-          <TimelineItem>
-            <TimelineOppositeContent
-              sx={{ m: 'auto 0' }}
-              variant="body2"
-              color="text.secondary"
-            >
-              10:00 am
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineConnector />
-              <TimelineDot color="primary">
-                <LaptopMacIcon />
-              </TimelineDot>
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent sx={{ py: '12px', px: 2 }}>
-              <Typography variant="h6" component="span">
-                Code
-              </Typography>
-              <Typography>Because it&apos;s awesome!</Typography>
-            </TimelineContent>
-          </TimelineItem>
-          <TimelineItem>
-            <TimelineSeparator>
-              <TimelineConnector />
-              <TimelineDot color="primary" variant="outlined">
-                <HotelIcon />
-              </TimelineDot>
-              <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
-            </TimelineSeparator>
-            <TimelineContent sx={{ py: '12px', px: 2 }}>
-              <Typography variant="h6" component="span">
-                Sleep
-              </Typography>
-              <Typography>Because you need rest</Typography>
-            </TimelineContent>
-          </TimelineItem>
-          <TimelineItem>
-            <TimelineSeparator>
-              <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
-              <TimelineDot color="secondary">
-                <RepeatIcon />
-              </TimelineDot>
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent sx={{ py: '12px', px: 2 }}>
-              <Typography variant="h6" component="span">
-                Repeat
-              </Typography>
-              <Typography>Because this is the life you love!</Typography>
-            </TimelineContent>
-          </TimelineItem>
-        </Timeline>
-      );
-    }
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    axios
+      .get(apiRoutes.history.getAssetHistory + `?id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        let { data } = res;
+        let assets = data.result.filter((ass) => ass.asset.id === id)[0];
+        setData(assets);
+        console.log(assets)
+      });
+  }, []);
+
+  return (
+    <Timeline position="alternate">
+      <TimelineItem>
+        <TimelineOppositeContent
+          sx={{ m: 'auto 0' }}
+          align="right"
+          variant="body2"
+          color="red"
+        >
+          Serial Number
+        </TimelineOppositeContent>
+        <TimelineSeparator>
+          <TimelineConnector />
+          <TimelineDot>
+            <FastfoodIcon />
+          </TimelineDot>
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent sx={{ py: '12px', px: 2 }}>
+          <Typography sx={{mt: '.7rem'}}>{data.asset?.SerialNumber}</Typography>
+        </TimelineContent>
+      </TimelineItem>
+
+      <TimelineItem>
+        <TimelineOppositeContent
+          sx={{ m: 'auto 0' }}
+          align="right"
+          variant="body2"
+          color="red"
+        >
+         owner
+        </TimelineOppositeContent>
+        <TimelineSeparator>
+          <TimelineConnector />
+          <TimelineDot>
+            <FastfoodIcon />
+          </TimelineDot>
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent sx={{ py: '12px', px: 2 }}>
+          <Typography variant="body2" style={{marginTop: '.8rem'}}>{data.asset?.owner}</Typography>
+        </TimelineContent>
+      </TimelineItem>
+
+      <TimelineItem>
+        <TimelineOppositeContent
+          sx={{ m: 'auto 0' }}
+          align="right"
+          variant="body2"
+          color="red"
+        >
+          timestamp
+        </TimelineOppositeContent>
+        <TimelineSeparator>
+          <TimelineConnector />
+          <TimelineDot>
+            <FastfoodIcon />
+          </TimelineDot>
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent sx={{ py: '12px', px: 2 }}>
+          <Typography variant='subtitle2' sx={{mt: '.5rem'}}>{data.timestamp?.substring(0, data.timestamp.indexOf("."))}</Typography>
+        </TimelineContent>
+      </TimelineItem>
+
+      <TimelineItem>
+        <TimelineOppositeContent
+          sx={{ m: 'auto 0' }}
+          align="right"
+          variant="body2"
+          color="red"
+        >
+          txType
+        </TimelineOppositeContent>
+        <TimelineSeparator>
+          <TimelineConnector />
+          <TimelineDot>
+            <FastfoodIcon />
+          </TimelineDot>
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent sx={{ py: '12px', px: 2 }}>
+          
+          <Typography variant='body2' sx={{mt: '.8rem'}}>{data.asset?.txType}</Typography>
+        </TimelineContent>
+      </TimelineItem>
+
+    {data.buyer && (
+      <TimelineItem>
+        <TimelineOppositeContent
+          sx={{ m: 'auto 0' }}
+          align="right"
+          variant="body2"
+          color="red"
+        >
+          Buyer
+        </TimelineOppositeContent>
+        <TimelineSeparator>
+          <TimelineConnector />
+          <TimelineDot>
+            <FastfoodIcon />
+          </TimelineDot>
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent sx={{ py: '12px', px: 2 }}>
+          
+          <Typography variant='body2' sx={{mt: '.8rem'}}>{data.asset?.buyer}</Typography>
+        </TimelineContent>
+      </TimelineItem>
+)}
+      {data.localDC && (
+      <TimelineItem>
+        <TimelineOppositeContent
+          sx={{ m: 'auto 0' }}
+          align="right"
+          variant="body2"
+          color="red"
+        >
+          Local DC
+        </TimelineOppositeContent>
+        <TimelineSeparator>
+          <TimelineConnector />
+          <TimelineDot>
+            <FastfoodIcon />
+          </TimelineDot>
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent sx={{ py: '12px', px: 2 }}>
+          
+          <Typography variant='body2' sx={{mt: '.8rem'}}>{data.asset?.localDC}</Typography>
+        </TimelineContent>
+      </TimelineItem>
+  )}
+
+    {data.globalDC && (
+      <TimelineItem>
+        <TimelineOppositeContent
+          sx={{ m: 'auto 0' }}
+          align="right"
+          variant="body2"
+          color="text.secondary"
+        >
+          Global DC
+        </TimelineOppositeContent>
+        <TimelineSeparator>
+          <TimelineConnector />
+          <TimelineDot>
+            <FastfoodIcon />
+          </TimelineDot>
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent sx={{ py: '12px', px: 2 }}>
+          
+          <Typography variant='body2' sx={{mt: '.8rem'}}>{data.asset?.globalDC}</Typography>
+        </TimelineContent>
+      </TimelineItem>
+  )}
+      
+    </Timeline>
+  );
+}

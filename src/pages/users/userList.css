@@ -9,7 +9,6 @@
     visibility: unset;
 }
 .editIcon{
-    background-color: #E91E63;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -18,9 +17,9 @@
 .lablEdit{
     padding: 2px 5px;
     color: #ffffff;
+    opacity: 0.3;
 }
 .historyIcon{
-    background-color: #009688;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -32,7 +31,7 @@
 
 }
 .css-1usso8h-MuiDataGrid-root .MuiDataGrid-withBorderColor{
-    border-color: black!important;
+    border-color: rgb(18, 14, 22)!important;
 }
 .css-rtrcn9-MuiTablePagination-root{
     color: #ffffff!important;
@@ -45,4 +44,14 @@
 }
 .css-1usso8h-MuiDataGrid-root .MuiDataGrid-row:nth-child(odd){
     background-color: #181818;
+}
+.css-19kzrtu{
+    background-color: rgb(18, 14, 22);
+    padding-left: 10px!important;
+}
+.css-zlen0r-MuiContainer-root{
+    padding-left: 0!important;
+}
+.css-1iyq7zh-MuiDataGrid-columnHeaders{
+    background: #460442;
 }

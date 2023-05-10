@@ -1,7 +1,5 @@
 import React from 'react';
 
-
-
 export const ModalContext = React.createContext({value: '', setValue: () => {}})
 
 export const ModalProvider = ({children}) => {

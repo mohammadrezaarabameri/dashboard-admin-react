@@ -1,17 +1,16 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Paper from '@mui/material/Paper';
-import Draggable from 'react-draggable';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Paper from "@mui/material/Paper";
+import Draggable from "react-draggable";
 import { apiRoutes } from "../../api/api";
 import axios from "axios";
-import { useModal } from '../../context/ModalContext/ModalContext';
-import ButtonLaoding from '../button/Button';
-import './Modal.css'
-
+import { useModal } from "../../context/ModalContext/ModalContext";
+import ButtonLaoding from "../button/Button";
+import "./Modal.css";
 
 function PaperComponent(props) {
   return (
@@ -24,9 +23,23 @@ function PaperComponent(props) {
   );
 }
 
-export default function Modal({children, ...otherProps}) {
+const changeAssetOwner = async ( reqData ) => {
+  const token = localStorage.getItem("token");
+  await axios
+  .post(apiRoutes.changeOwner.ownerShip, reqData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  .then((res) => {
+    let { data } = res;
+    console.log(data) 
+  })
+}
 
-  const { icon, title, iD } = otherProps;
+
+export default function Modal({ children, ...otherProps }) {
+  const { icon, title, id } = otherProps;
 
   const [open, setOpen] = React.useState(false);
 
@@ -42,35 +55,54 @@ export default function Modal({children, ...otherProps}) {
 
   const saveCallback = (e) => {
     e.preventDefault();
-    
+
     const data = {
-      id: iD,
+      id: id,
       status: value,
     };
     sendChangeStatus(data);
   };
 
-  const sendChangeStatus = (reqData) => {
+  const sendChangeStatus = async (reqData) => {
     const token = localStorage.getItem("token");
 
-    axios
-      .post(apiRoutes.status.changeStatus, {
-        ...reqData,
-      }, { headers: {
-        Authorization: `Bearer ${token}`,
-      }},)
+    if (reqData.status.toLowerCase() === "warehouse") {
+      const assetOwnerData = {
+        id: reqData.id,
+        newOwner: "username@OrgD2"
+      }
+      await changeAssetOwner(assetOwnerData);
+    }
+
+    await axios
+      .post(
+        apiRoutes.status.changeStatus,
+        {
+          ...reqData,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
-        console.log(res);
         let { data } = res;
         if (data.result.message && data.error == null) {
           setOpen(false);
         }
       });
+
+
   };
 
   return (
     <div>
-      <Button style={{border:'none', color:'black'}} variant="outlined" onClick={handleClickOpen}>
+      <Button
+        style={{ border: "none", color: "black" }}
+        variant="outlined"
+        onClick={handleClickOpen}
+      >
         {icon}
       </Button>
       <Dialog
@@ -79,19 +111,17 @@ export default function Modal({children, ...otherProps}) {
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
       >
-        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-        {title}
+        <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
+          {title}
         </DialogTitle>
-        <DialogContent>
-          {children}
-        </DialogContent>
-        <DialogActions className='buttonModal'>
-          <Button autoFocus onClick={handleClose} className='buttonCancel'>
+        <DialogContent>{children}</DialogContent>
+        <DialogActions className="buttonModal">
+          <Button autoFocus onClick={handleClose} className="buttonCancel">
             Cancel
           </Button>
           <div onClick={saveCallback}>
-            <ButtonLaoding nameButton={'save'}/>
-            </div>
+            <ButtonLaoding nameButton={"save"} />
+          </div>
         </DialogActions>
       </Dialog>
     </div>

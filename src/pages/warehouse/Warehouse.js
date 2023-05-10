@@ -16,7 +16,6 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import { useModal } from "../../context/ModalContext/ModalContext";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
-import "./userList.css";
 //import tab
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
@@ -26,7 +25,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import SnackbarContext from "../../context/SnackbarContext/SnackbarContext";
+// import SnackbarContext from "../../context/SnackbarContext/SnackbarContext";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -79,10 +78,10 @@ const values = [
   },
 ];
 
-export default function UserList() {
+export default function Warehouse() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-  const { handleOpen } = useContext(SnackbarContext);
+  // const { handleOpen } = useContext(SnackbarContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -115,20 +114,14 @@ export default function UserList() {
       width: 160,
       renderCell: (params) => {
         let colorVal = '';
+        
         if (params.row.status !== "") {
           colorVal = values.filter(item => item.name.toLowerCase() === params.row.status.toLowerCase())[0].color
                      
         } else {
           colorVal = produced.color;
         }
-        if (params.row.status === 'warehouse'){
-          console.log("if");
-          const data = {
-            id: params.row.id,
-            newOwner: "username@OrgD2"
-          };
-          changeAssetOwner(data);
-        }
+
 
         return (
           <Chip label={params.row.status ? params.row.status : "Produced"} 
@@ -155,8 +148,8 @@ export default function UserList() {
                   icon={
                     <div className="editIcon">
                       {" "}
-                      <label className="lablEdit"></label>
-                      <EditIcon style={{color: "#fff"}} />
+                      <label className="lablEdit">Edit</label>
+                      <EditIcon />
                     </div>
                   }
                   id={params.row.id}
@@ -175,8 +168,8 @@ export default function UserList() {
                   icon={
                     <div className="historyIcon">
                       {" "}
-                      <label className="lablHistory"></label>
-                      <HistoryIcon style={{color: "#fff"}} />
+                      <label className="lablHistory">History</label>
+                      <HistoryIcon />
                     </div>
                   }
                 >
@@ -206,27 +199,11 @@ export default function UserList() {
       })
       .then((res) => {
         let { data } = res;
-        let assets = data.result.filter(item => item.status !== "warehouse")
-        setRows(assets);
-        console.log(assets);
+        setRows(data.result);
+        console.log(data.result);
         // setValuee(true);
       });
   }, [rows]);
-
-  const changeAssetOwner = (reqData)=>{
-    console.log("owner");
-    const token = localStorage.getItem("token");
-    axios
-    .post(apiRoutes.changeOwner.ownerShip, reqData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((res) => {
-      console.log(res);
-      let { data } = res;
-    })
-  }
 
 
   return (
@@ -253,15 +230,16 @@ export default function UserList() {
           >
             <AppBar position="static">
               <Tabs
-                style={{ backgroundColor: "rgb(18, 14, 22)" }}
+                style={{ backgroundColor: "#613fe5" }}
                 value={value}
                 onChange={handleChange}
                 indicatorColor="secondary"
                 textColor="inherit"
+                variant="fullWidth"
                 aria-label="full width tabs example"
               >
-                <Tab label="Batch " {...a11yProps(0)} />
-                <Tab label="Item " {...a11yProps(1)} />
+                <Tab label="Item One" {...a11yProps(0)} />
+                <Tab label="Item Two" {...a11yProps(1)} />
               </Tabs>
             </AppBar>
             <SwipeableViews
@@ -277,7 +255,7 @@ export default function UserList() {
               >
                 <Container sx={{ height: 400, width: "100%" }}>
                   <DataGrid
-                    style={{ color: "#ffffff",    borderColor: "black"}}
+                    style={{ color: "#ffffff" }}
                     rows={rows.filter(item => item.type.toLowerCase() == "batch")}
                     columns={columns}
                     initialState={{
@@ -296,7 +274,6 @@ export default function UserList() {
               <TabPanel value={value} index={1} dir={theme.direction}>
                 <Container sx={{ height: 400, width: "100%" }}>
                   <DataGrid
-                    style={{ color: "#ffffff" }}
                     rows={rows.filter(item => item.type.toLowerCase() == "asset")}
                     columns={columns}
                     initialState={{

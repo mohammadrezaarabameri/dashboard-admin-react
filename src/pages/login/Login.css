@@ -1,10 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-*{
-  margin:0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
 
 .html,.body{
   display: flex;
@@ -20,7 +14,7 @@
 }
 
 .containerLogin{
-height: 100%;
+  height: 100%;
   width: 330px;
   background: #613fe5;
   border-radius: 10px;
@@ -33,7 +27,7 @@ height: 100%;
   font-size: 33px;
   font-weight: 600;
   margin-bottom: 35px;
-  color: #000;
+  color: #ebe1e1;
 }
 
 .containerLogin .login{

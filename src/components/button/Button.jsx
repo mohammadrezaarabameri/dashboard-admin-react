@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import './Button.css'
+import btn from './Button.module.css'
 
 // function simulateNetworkRequest() {
 //     return new Promise((resolve) => setTimeout(resolve, 2000));
@@ -8,24 +8,28 @@ import './Button.css'
 export default function ButtonLaoding(props) {
         const [isLoading, setLoading] = useState(false);
         const buttonRef = useRef();
-        const {nameButton} = props;
+        
+        const { nameButton, backgroundColor } = props;
 
         useEffect(() => {
           if (isLoading) {
             buttonRef.current.classList.add('loading')
-            // simulateNetworkRequest().then(() => {
+            setTimeout(() => {
               setLoading(false);
-            // });
+              console.log(isLoading);
+            },3000);
           }
         }, [isLoading]);
       
         const handleClick = () => setLoading(true);
       
         return (
-          <button className='button'
+          <button 
             ref = {buttonRef}
+            className={btn.button}
             disabled={isLoading}
             onClick={!isLoading ? handleClick : null}
+            style={{ backgronudColor: "#613fe5" }}
           >
             {nameButton}
           </button>
