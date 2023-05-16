@@ -191,12 +191,14 @@ export default function UserList() {
   ]);
 
   const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const { valuee, setValuee } = useModal();
 
   const alertRef = useRef();
 
   useEffect(() => {
+    setLoading(true);
     const token = localStorage.getItem("token");
     axios
       .get(apiRoutes.asset.getAssetByOwner, {
@@ -209,9 +211,9 @@ export default function UserList() {
         let assets = data.result.filter(item => item.status !== "warehouse")
         setRows(assets);
         console.log(assets);
-        // setValuee(true);
+        setLoading(false);
       });
-  }, [rows]);
+  }, []);
 
   const changeAssetOwner = (reqData)=>{
     console.log("owner");
@@ -235,6 +237,22 @@ export default function UserList() {
       <div className="row">
         <Sidebar />
         <div className="list">
+          {loading &&
+                <div className="container">
+
+    <div className="loader">
+      <div className="loader--dot"></div>
+      <div className="loader--dot"></div>
+      <div className="loader--dot"></div>
+      <div className="loader--dot"></div>
+      <div className="loader--dot"></div>
+      <div className="loader--dot"></div>
+      <div className="loader--dot"></div>
+    </div>
+  </div>
+          }
+          {!loading && 
+          <>
           <Stack
             className="hiden"
             ref={alertRef}
@@ -314,6 +332,8 @@ export default function UserList() {
               </TabPanel>
             </SwipeableViews>
           </Box>
+          </>
+          }
         </div>
       </div>
     </div>

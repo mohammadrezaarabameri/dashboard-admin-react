@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import axios from "axios";
+import './warehouse.css'
 import { apiRoutes } from "../../api/api";
 import { jsx, css, Global, ClassNames } from "@emotion/react";
 import { Chip, Container } from "@mui/material";
@@ -26,39 +27,6 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 // import SnackbarContext from "../../context/SnackbarContext/SnackbarContext";
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`,
-  };
-}
 
 const values = [
   {
@@ -144,7 +112,7 @@ export default function Warehouse() {
             <div>
               <ModalProvider>
                 <Modal
-                  title={"Change Status"}
+                  title={"set bid"}
                   icon={
                     <div className="editIcon">
                       {" "}
@@ -154,10 +122,7 @@ export default function Warehouse() {
                   }
                   id={params.row.id}
                 >
-                  <SelectComponent
-                    values={values}
-                    style={{ backgroundColor: `${values[0].color}` }}
-                  />
+                  <input className="inputBid" type="number" placeholder="enter your bid ..."/>
                 </Modal>
               </ModalProvider>
             </div>
@@ -201,7 +166,6 @@ export default function Warehouse() {
         let { data } = res;
         setRows(data.result);
         console.log(data.result);
-        // setValuee(true);
       });
   }, [rows]);
 
@@ -228,31 +192,6 @@ export default function Warehouse() {
             sx={{ bgcolor: "background.paper", width: "98%" }}
             style={{ borderRadius: "10px" }}
           >
-            <AppBar position="static">
-              <Tabs
-                style={{ backgroundColor: "#613fe5" }}
-                value={value}
-                onChange={handleChange}
-                indicatorColor="secondary"
-                textColor="inherit"
-                variant="fullWidth"
-                aria-label="full width tabs example"
-              >
-                <Tab label="Item One" {...a11yProps(0)} />
-                <Tab label="Item Two" {...a11yProps(1)} />
-              </Tabs>
-            </AppBar>
-            <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={value}
-              onChangeIndex={handleChangeIndex}
-            >
-              <TabPanel
-                value={value}
-                index={0}
-                dir={theme.direction}
-                style={{ backgroundColor: "#000000" }}
-              >
                 <Container sx={{ height: 400, width: "100%" }}>
                   <DataGrid
                     style={{ color: "#ffffff" }}
@@ -270,26 +209,6 @@ export default function Warehouse() {
                     disableRowSelectionOnClick
                   />
                 </Container>
-              </TabPanel>
-              <TabPanel value={value} index={1} dir={theme.direction}>
-                <Container sx={{ height: 400, width: "100%" }}>
-                  <DataGrid
-                    rows={rows.filter(item => item.type.toLowerCase() == "asset")}
-                    columns={columns}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 5,
-                        },
-                      },
-                    }}
-                    pageSizeOptions={[5]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                  />
-                </Container>
-              </TabPanel>
-            </SwipeableViews>
           </Box>
         </div>
       </div>
