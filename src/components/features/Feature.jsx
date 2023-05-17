@@ -2,6 +2,7 @@ import React from 'react'
 import './Feature.css'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import CountUp from 'react-countup';
 
 export default function Feature() {
   return (
@@ -9,7 +10,7 @@ export default function Feature() {
         <div className="featureItemRevanue">
             <span className="featureTittle">Revanue</span>
         <div className="featureContainer">
-            <span className="featureMoney">$2,123</span>
+            <span className="featureMoney">$<CountUp start={0} end={2123}/></span>
             <span className="featureRate">
                 -186 <ArrowDownwardIcon className='featureIcon negative' />
             </span>
@@ -19,7 +20,7 @@ export default function Feature() {
         <div className="featureItemSales">
             <span className="featureTittle">Sales</span>
         <div className="featureContainer">
-            <span className="featureMoney">$4,415</span>
+            <span className="featureMoney">$<CountUp start={0} end={4143}/></span>
             <span className="featureRate">
                 -1.4 <ArrowDownwardIcon className='featureIcon negative' />
             </span>
@@ -29,7 +30,7 @@ export default function Feature() {
         <div className="featureItemCost">
             <span className="featureTittle">Cost</span>
         <div className="featureContainer">
-            <span className="featureMoney">$2,225</span>
+            <span className="featureMoney">$<CountUp start={0} end={2225}/></span>
             <span className="featureRate">
                 +2.4 <ArrowUpwardIcon className='featureIcon' />
             </span>

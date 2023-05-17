@@ -5,3 +5,159 @@
     width: 100%;
     height: 40px;
 }
+
+.list{
+    flex: 4;
+}
+
+.hiden{
+    visibility: hidden;
+}
+.hiden.show{
+    visibility: unset;
+}
+.editIcon{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+}
+.lablEdit{
+    padding: 2px 5px;
+    color: #ffffff;
+    opacity: 0.3;
+}
+.historyIcon{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+}
+.lablHistory{
+    padding: 2px 5px;
+    color: #ffffff;
+
+}
+.css-1usso8h-MuiDataGrid-root .MuiDataGrid-withBorderColor{
+    border-color: rgb(18, 14, 22)!important;
+}
+.css-rtrcn9-MuiTablePagination-root{
+    color: #ffffff!important;
+}
+.css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root{
+    color: #ffffff!important;
+}
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root{
+    color:#ffffff!important;
+}
+.css-1usso8h-MuiDataGrid-root .MuiDataGrid-row:nth-child(odd){
+    background-color: #181818;
+}
+.css-19kzrtu{
+    background-color: rgb(18, 14, 22);
+    padding-left: 10px!important;
+    border-color: #181818!important;
+}
+.css-zlen0r-MuiContainer-root{
+    padding-left: 0!important;
+}
+.css-1iyq7zh-MuiDataGrid-columnHeaders{
+    background: #460442;
+}
+
+.container {
+    height: 100vh;
+    width: 100vw;
+    font-family: Helvetica;
+  }
+  
+  .loader {
+    height: 20px;
+    width: 250px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+  .loader--dot {
+    animation-name: loader;
+    animation-timing-function: ease-in-out;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    height: 20px;
+    width: 20px;
+    border-radius: 100%;
+    background-color: black;
+    position: absolute;
+    border: 2px solid white;
+  }
+  .loader--dot:first-child {
+    background-color: #8cc759;
+    animation-delay: 0.5s;
+  }
+  .loader--dot:nth-child(2) {
+    background-color: #8c6daf;
+    animation-delay: 0.4s;
+  }
+  .loader--dot:nth-child(3) {
+    background-color: #ef5d74;
+    animation-delay: 0.3s;
+  }
+  .loader--dot:nth-child(4) {
+    background-color: #f9a74b;
+    animation-delay: 0.2s;
+  }
+  .loader--dot:nth-child(5) {
+    background-color: #60beeb;
+    animation-delay: 0.1s;
+  }
+  .loader--dot:nth-child(6) {
+    background-color: #fbef5a;
+    animation-delay: 0s;
+  }
+  .loader--text {
+    position: absolute;
+    top: 200%;
+    left: 0;
+    right: 0;
+    width: 4rem;
+    margin: auto;
+  }
+  .loader--text:after {
+    content: "Loading";
+    font-weight: bold;
+    animation-name: loading-text;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+  }
+  
+  @keyframes loader {
+    15% {
+      transform: translateX(0);
+    }
+    45% {
+      transform: translateX(230px);
+    }
+    65% {
+      transform: translateX(230px);
+    }
+    95% {
+      transform: translateX(0);
+    }
+  }
+  @keyframes loading-text {
+    0% {
+      content: "Loading";
+    }
+    25% {
+      content: "Loading.";
+    }
+    50% {
+      content: "Loading..";
+    }
+    75% {
+      content: "Loading...";
+    }
+  }

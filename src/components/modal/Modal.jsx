@@ -39,11 +39,13 @@ const changeAssetOwner = async ( reqData ) => {
 
 
 export default function Modal({ children, ...otherProps }) {
-  const { icon, title, id } = otherProps;
+  const { icon, title, id, price } = otherProps;
 
   const [open, setOpen] = React.useState(false);
 
   const { value, setValue } = useModal();
+  
+  const username = localStorage.getItem("username");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -55,12 +57,22 @@ export default function Modal({ children, ...otherProps }) {
 
   const saveCallback = (e) => {
     e.preventDefault();
-
+      if (username === 'username@OrgD2'){
+ 
+    const priceData = {
+      id: id,
+      price: price.props.value,
+    }
+    setAssetPrice(priceData);
+    console.log(priceData);
+  }
+  else {
     const data = {
       id: id,
       status: value,
     };
     sendChangeStatus(data);
+  }
   };
 
   const sendChangeStatus = async (reqData) => {
@@ -96,6 +108,54 @@ export default function Modal({ children, ...otherProps }) {
 
   };
 
+  const setAssetPrice = (reqData)=>{
+    const token = localStorage.getItem("token");
+    axios
+    .post(
+      apiRoutes.asset.setAssetPrice,
+      {
+        ...reqData,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .then((res) => {
+      let { data } = res;
+      if (data.result.message && data.error == null) {
+        setAssetPublicToSale();
+      }
+    });
+  }
+
+  const setAssetPublicToSale = ()=>{
+    const token = localStorage.getItem("token");
+    const data = {
+      assetId : id,
+      price : value,
+    }
+    axios
+    .post(
+      apiRoutes.asset.setAssetToSale,
+      {
+        data,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .then((res) => {
+      let { data } = res;
+      if (data.result.message && data.error == null) {
+        setOpen(false);
+      }
+    });
+  }
+
   return (
     <div>
       <Button
@@ -114,7 +174,7 @@ export default function Modal({ children, ...otherProps }) {
         <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
           {title}
         </DialogTitle>
-        <DialogContent>{children}</DialogContent>
+        <DialogContent>{username === 'username@OrgD2'? price : children}</DialogContent>
         <DialogActions className="buttonModal">
           <Button autoFocus onClick={handleClose} className="buttonCancel">
             Cancel

@@ -114,29 +114,30 @@ export default function UserList() {
       headerName: "Status",
       width: 160,
       renderCell: (params) => {
-        let colorVal = '';
+        let colorVal = "";
         if (params.row.status !== "") {
-          colorVal = values.filter(item => item.name.toLowerCase() === params.row.status.toLowerCase())[0].color
-                     
+          colorVal = values.filter(
+            (item) =>
+              item.name.toLowerCase() === params.row.status.toLowerCase()
+          )[0].color;
         } else {
           colorVal = produced.color;
         }
-        if (params.row.status === 'warehouse'){
+        if (params.row.status === "warehouse") {
           console.log("if");
           const data = {
             id: params.row.id,
-            newOwner: "username@OrgD2"
+            newOwner: "username@OrgD2",
           };
           changeAssetOwner(data);
         }
 
         return (
-          <Chip label={params.row.status ? params.row.status : "Produced"} 
-          style={{ backgroundColor: `${colorVal}`, color: '#fff' }}
-          
+          <Chip
+            label={params.row.status ? params.row.status : "Produced"}
+            style={{ backgroundColor: `${colorVal}`, color: "#fff" }}
           />
-          
-          )
+        );
       },
     },
     {
@@ -156,7 +157,7 @@ export default function UserList() {
                     <div className="editIcon">
                       {" "}
                       <label className="lablEdit"></label>
-                      <EditIcon style={{color: "#fff"}} />
+                      <EditIcon style={{ color: "#fff" }} />
                     </div>
                   }
                   id={params.row.id}
@@ -176,7 +177,7 @@ export default function UserList() {
                     <div className="historyIcon">
                       {" "}
                       <label className="lablHistory"></label>
-                      <HistoryIcon style={{color: "#fff"}} />
+                      <HistoryIcon style={{ color: "#fff" }} />
                     </div>
                   }
                 >
@@ -208,28 +209,27 @@ export default function UserList() {
       })
       .then((res) => {
         let { data } = res;
-        let assets = data.result.filter(item => item.status !== "warehouse")
+        let assets = data.result.filter((item) => item.status !== "warehouse");
         setRows(assets);
         console.log(assets);
         setLoading(false);
       });
   }, []);
 
-  const changeAssetOwner = (reqData)=>{
+  const changeAssetOwner = (reqData) => {
     console.log("owner");
     const token = localStorage.getItem("token");
     axios
-    .post(apiRoutes.changeOwner.ownerShip, reqData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((res) => {
-      console.log(res);
-      let { data } = res;
-    })
-  }
-
+      .post(apiRoutes.changeOwner.ownerShip, reqData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        let { data } = res;
+      });
+  };
 
   return (
     <div>
@@ -237,103 +237,106 @@ export default function UserList() {
       <div className="row">
         <Sidebar />
         <div className="list">
-          {loading &&
-                <div className="container">
-
-    <div className="loader">
-      <div className="loader--dot"></div>
-      <div className="loader--dot"></div>
-      <div className="loader--dot"></div>
-      <div className="loader--dot"></div>
-      <div className="loader--dot"></div>
-      <div className="loader--dot"></div>
-      <div className="loader--dot"></div>
-    </div>
-  </div>
-          }
-          {!loading && 
-          <>
-          <Stack
-            className="hiden"
-            ref={alertRef}
-            value={valuee}
-            sx={{ width: "100%" }}
-            spacing={2}
-          >
-            <Alert severity="success">
-              {" "}
-              This is a success alert — check it out!
-            </Alert>
-          </Stack>
-          <Box
-            sx={{ bgcolor: "background.paper", width: "98%" }}
-            style={{ borderRadius: "10px" }}
-          >
-            <AppBar position="static">
-              <Tabs
-                style={{ backgroundColor: "rgb(18, 14, 22)" }}
-                value={value}
-                onChange={handleChange}
-                indicatorColor="secondary"
-                textColor="inherit"
-                aria-label="full width tabs example"
+          {loading && (
+            <div className="container">
+              <div className="loader">
+                <div className="loader--dot"></div>
+                <div className="loader--dot"></div>
+                <div className="loader--dot"></div>
+                <div className="loader--dot"></div>
+                <div className="loader--dot"></div>
+                <div className="loader--dot"></div>
+                <div className="loader--dot"></div>
+              </div>
+            </div>
+          )}
+          {!loading && (
+            <>
+              <Stack
+                className="hiden"
+                ref={alertRef}
+                value={valuee}
+                sx={{ width: "100%" }}
+                spacing={2}
               >
-                <Tab label="Batch " {...a11yProps(0)} />
-                <Tab label="Item " {...a11yProps(1)} />
-              </Tabs>
-            </AppBar>
-            <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={value}
-              onChangeIndex={handleChangeIndex}
-            >
-              <TabPanel
-                value={value}
-                index={0}
-                dir={theme.direction}
-                style={{ backgroundColor: "#000000" }}
+                <Alert severity="success">
+                  {" "}
+                  This is a success alert — check it out!
+                </Alert>
+              </Stack>
+              <Box
+                sx={{ bgcolor: "background.paper", width: "98%" }}
+                style={{ borderRadius: "10px" }}
               >
-                <Container sx={{ height: 400, width: "100%" }}>
-                  <DataGrid
-                    style={{ color: "#ffffff",    borderColor: "black"}}
-                    rows={rows.filter(item => item.type.toLowerCase() == "batch")}
-                    columns={columns}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 5,
-                        },
-                      },
-                    }}
-                    pageSizeOptions={[5]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                  />
-                </Container>
-              </TabPanel>
-              <TabPanel value={value} index={1} dir={theme.direction}>
-                <Container sx={{ height: 400, width: "100%" }}>
-                  <DataGrid
-                    style={{ color: "#ffffff" }}
-                    rows={rows.filter(item => item.type.toLowerCase() == "asset")}
-                    columns={columns}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 5,
-                        },
-                      },
-                    }}
-                    pageSizeOptions={[5]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                  />
-                </Container>
-              </TabPanel>
-            </SwipeableViews>
-          </Box>
-          </>
-          }
+                <AppBar position="static">
+                  <Tabs
+                    style={{ backgroundColor: "rgb(18, 14, 22)" }}
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="secondary"
+                    textColor="inherit"
+                    aria-label="full width tabs example"
+                  >
+                    <Tab label="Batch " {...a11yProps(0)} />
+                    <Tab label="Item " {...a11yProps(1)} />
+                  </Tabs>
+                </AppBar>
+                <SwipeableViews
+                  axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+                  index={value}
+                  onChangeIndex={handleChangeIndex}
+                >
+                  <TabPanel
+                    value={value}
+                    index={0}
+                    dir={theme.direction}
+                    style={{ backgroundColor: "#000000" }}
+                  >
+                    <Container sx={{ height: 400, width: "100%" }}>
+                      <DataGrid
+                        style={{ color: "#ffffff", borderColor: "black" }}
+                        rows={rows.filter(
+                          (item) => item.type.toLowerCase() == "batch"
+                        )}
+                        columns={columns}
+                        initialState={{
+                          pagination: {
+                            paginationModel: {
+                              pageSize: 5,
+                            },
+                          },
+                        }}
+                        pageSizeOptions={[5]}
+                        checkboxSelection
+                        disableRowSelectionOnClick
+                      />
+                    </Container>
+                  </TabPanel>
+                  <TabPanel value={value} index={1} dir={theme.direction}  style={{ backgroundColor: "#000000" }}>
+                    <Container sx={{ height: 400, width: "100%" }}>
+                      <DataGrid
+                        style={{ color: "#ffffff", borderColor: "black" }}
+                        rows={rows.filter(
+                          (item) => item.type.toLowerCase() == "bulk"
+                        )}
+                        columns={columns}
+                        initialState={{
+                          pagination: {
+                            paginationModel: {
+                              pageSize: 5,
+                            },
+                          },
+                        }}
+                        pageSizeOptions={[5]}
+                        checkboxSelection
+                        disableRowSelectionOnClick
+                      />
+                    </Container>
+                  </TabPanel>
+                </SwipeableViews>
+              </Box>
+            </>
+          )}
         </div>
       </div>
     </div>

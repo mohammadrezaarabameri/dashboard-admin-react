@@ -8,6 +8,8 @@ export const apiRoutes = {
   },
   asset: {
     getAssetByOwner: `${HOST}/channels/mychannel/chaincodes/chaincode/assets/owner`,
+    setAssetPrice: `${HOST}/channels/mychannel/chaincodes/chaincode/asset/price`,
+    setAssetToSale: `${HOST}/channels/mychannel/chaincodes/chaincode/collection/Market/asset/public`
   },
   status: {
     changeStatus: `${HOST}/channels/mychannel/chaincodes/chaincode/asset/status/change`,

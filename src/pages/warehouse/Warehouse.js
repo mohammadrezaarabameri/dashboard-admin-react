@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import axios from "axios";
-import './warehouse.css'
+import "./warehouse.css";
 import { apiRoutes } from "../../api/api";
 import { jsx, css, Global, ClassNames } from "@emotion/react";
 import { Chip, Container } from "@mui/material";
@@ -17,14 +17,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import { useModal } from "../../context/ModalContext/ModalContext";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
-//import tab
-import PropTypes from "prop-types";
-import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 // import SnackbarContext from "../../context/SnackbarContext/SnackbarContext";
 
@@ -48,16 +41,6 @@ const values = [
 
 export default function Warehouse() {
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
-  // const { handleOpen } = useContext(SnackbarContext);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const handleChangeIndex = (index) => {
-    setValue(index);
-  };
 
   const [columns, setColumns] = useState([
     {
@@ -81,23 +64,23 @@ export default function Warehouse() {
       headerName: "Status",
       width: 160,
       renderCell: (params) => {
-        let colorVal = '';
-        
+        let colorVal = "";
+
         if (params.row.status !== "") {
-          colorVal = values.filter(item => item.name.toLowerCase() === params.row.status.toLowerCase())[0].color
-                     
+          colorVal = values.filter(
+            (item) =>
+              item.name.toLowerCase() === params.row.status.toLowerCase()
+          )[0].color;
         } else {
           colorVal = produced.color;
         }
 
-
         return (
-          <Chip label={params.row.status ? params.row.status : "Produced"} 
-          style={{ backgroundColor: `${colorVal}`, color: '#fff' }}
-          
+          <Chip
+            label={params.row.status ? params.row.status : "Produced"}
+            style={{ backgroundColor: `${colorVal}`, color: "#fff" }}
           />
-          
-          )
+        );
       },
     },
     {
@@ -121,8 +104,16 @@ export default function Warehouse() {
                     </div>
                   }
                   id={params.row.id}
+                  price={
+                    <input
+                    className="inputBid"
+                    type="number"
+                    value={5}
+                    onChange={handleInput}
+                    placeholder="enter your bid ..."
+                  />
+                  }
                 >
-                  <input className="inputBid" type="number" placeholder="enter your bid ..."/>
                 </Modal>
               </ModalProvider>
             </div>
@@ -150,7 +141,9 @@ export default function Warehouse() {
 
   const [rows, setRows] = useState([]);
 
-  const { valuee, setValuee } = useModal();
+  const { value, setValue } = useModal();
+
+  const [number, setNumber] = useState();
 
   const alertRef = useRef();
 
@@ -167,9 +160,11 @@ export default function Warehouse() {
         setRows(data.result);
         console.log(data.result);
       });
-  }, [rows]);
+  }, []);
 
-
+const handleInput = (e)=>{
+  setNumber(e.target.value);
+}
   return (
     <div>
       <Topbar />
@@ -179,7 +174,6 @@ export default function Warehouse() {
           <Stack
             className="hiden"
             ref={alertRef}
-            value={valuee}
             sx={{ width: "100%" }}
             spacing={2}
           >
@@ -192,23 +186,23 @@ export default function Warehouse() {
             sx={{ bgcolor: "background.paper", width: "98%" }}
             style={{ borderRadius: "10px" }}
           >
-                <Container sx={{ height: 400, width: "100%" }}>
-                  <DataGrid
-                    style={{ color: "#ffffff" }}
-                    rows={rows.filter(item => item.type.toLowerCase() == "batch")}
-                    columns={columns}
-                    initialState={{
-                      pagination: {
-                        paginationModel: {
-                          pageSize: 5,
-                        },
-                      },
-                    }}
-                    pageSizeOptions={[5]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                  />
-                </Container>
+            <Container sx={{ height: 400, width: "100%" }}>
+              <DataGrid
+                style={{ color: "#ffffff", borderColor: "black" }}
+                rows={rows.filter((item) => item.type.toLowerCase() == "batch")}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: {
+                      pageSize: 5,
+                    },
+                  },
+                }}
+                pageSizeOptions={[5]}
+                checkboxSelection
+                disableRowSelectionOnClick
+              />
+            </Container>
           </Box>
         </div>
       </div>
